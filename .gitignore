@@ -1,4 +1,5 @@
 venv/
+requirements.txt/
 data/raw/*.csv
 *.pkl
 __pycache__/
