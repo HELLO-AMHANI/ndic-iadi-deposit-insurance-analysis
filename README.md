@@ -1,4 +1,4 @@
-# NDIC + IADI Deposit Insurance Analysis
+# NDIC + IADI Analytics Project
 
 **Author:** Promise O. Amhanesi
 
