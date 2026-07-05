@@ -31,4 +31,4 @@ docs/           → report.pdf, slides.pdf, demo link
 dashboard/      → Streamlit app (optional)
 
 ## Status
-🚧 In progress — Stage 0: Setup & goal definition
+🚧 In progress — Stage 1: Data Sourcing and SQL ingestion
