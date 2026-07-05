@@ -5,3 +5,5 @@ data/raw/*.csv
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store
+requirements.txt
+*.txt
