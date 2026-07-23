@@ -16,9 +16,8 @@ This project benchmarks Nigeria's NDIC against the [IADI Core Principles for Eff
 
 ## Data Sources (to be updated)
 - NDIC Annual Reports — https://www.ndic.gov.ng/publications
-- CBN Statistical Bulletin — https://www.cbn.gov.ng
-- IADI Annual Survey — https://www.iadi.org/en/about-iadi/annual-survey
 - World Bank GFDD — https://databank.worldbank.org
+- IADI Annual Survey — https://www.iadi.org/en/about-iadi/annual-survey
 
 ## Project Structure
 data/raw/       → downloaded source files
