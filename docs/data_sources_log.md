@@ -2,7 +2,7 @@
 
 | File | Source | URL | Date Accessed | Rows | Years |
 |------|--------|-----|---------------|------|-------|
-| ndic_annual_202501.csv | NDIC Annual Reports (manually compiled) | https://https://www.ndicdatabank.org/banking-industry?id=21 | 2026-07-25 | 15 | 2010–2024 |
+| ndic_annual_202501.csv | NDIC Annual Reports (manually compiled) | https://https://www.ndicdatabank.org | 2026-07-25 | 15 | 2010–2024 |
 | iadi_survey_202501.csv | IADI Annual Survey | https://www.iadi.org/en/about-iadi/annual-survey | 2026-07-25 | 210 | 2010–2024 |
 | world_bank_macro_202501.csv | World Bank Global Financial Development Database | https://databank.worldbank.org | 2026-07-25 | 210 | 2010–2024 |
 
