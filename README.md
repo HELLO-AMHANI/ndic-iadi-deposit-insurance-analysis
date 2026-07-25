@@ -15,7 +15,7 @@ How does NDIC's fund adequacy, coverage ratio, and premium system compare agains
 This project benchmarks Nigeria's NDIC against the [IADI Core Principles for Effective Deposit Insurance Systems](https://www.iadi.org/en/core-principles-and-guidance/core-principles/).
 
 ## Data Sources (to be updated)
-- NDIC Annual Reports — https://www.ndic.gov.ng/publications
+- NDIC Annual Reports — https://https://www.ndicdatabank.org
 - World Bank GFDD — https://databank.worldbank.org
 - IADI Annual Survey — https://www.iadi.org/en/about-iadi/annual-survey
 
