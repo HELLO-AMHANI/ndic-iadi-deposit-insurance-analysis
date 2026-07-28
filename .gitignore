@@ -7,3 +7,5 @@ __pycache__/
 .DS_Store
 requirements.txt
 *.txt
+ndic_iadi.db
+dataraw/
