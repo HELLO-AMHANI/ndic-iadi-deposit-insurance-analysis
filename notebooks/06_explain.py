@@ -1,8 +1,7 @@
-# =============================================================
 # NOTEBOOK 06 — SHAP EXPLAINABILITY
 # NDIC + IADI Deposit Insurance Analysis
 # Author: Promise O. Amhanesi
-# =============================================================
+# ======================================
 
 import pandas as pd
 import numpy as np
@@ -17,7 +16,7 @@ import os
 
 os.makedirs('resultsfigs', exist_ok=True)
 
-# ── Load model and data ───────────────────────────────────────
+# Load model and data 
 df       = pd.read_csv('dataclean/model_dataset.csv')
 xgb      = joblib.load('results/best_model_xgb.pkl')
 FEATURES = joblib.load('results/feature_names.pkl')
@@ -42,9 +41,7 @@ feature_labels = [
     'Fund Growth Rate'
 ]
 
-# =============================================================
 # SECTION 1 — Compute SHAP values
-# =============================================================
 
 explainer  = shap.TreeExplainer(xgb)
 shap_vals  = explainer.shap_values(X)
@@ -52,9 +49,7 @@ shap_vals  = explainer.shap_values(X)
 print("SHAP values computed.")
 print(f"Shape: {shap_vals.shape}  (rows × features)")
 
-# =============================================================
 # SECTION 2 — Summary plot (beeswarm)
-# =============================================================
 
 shap.initjs()
 fig_s = plt.figure(figsize=(11, 7))
@@ -71,9 +66,7 @@ plt.savefig('resultsfigs/10_shap_summary.png', dpi=180, bbox_inches='tight')
 plt.close()
 print("✅  Chart 10 saved: SHAP summary plot")
 
-# =============================================================
 # SECTION 3 — Feature importance bar chart
-# =============================================================
 
 mean_shap = np.abs(shap_vals).mean(axis=0)
 importance_df = pd.DataFrame({
@@ -101,9 +94,7 @@ plt.savefig('resultsfigs/11_shap_feature_importance.png', dpi=180, bbox_inches='
 plt.close()
 print("✅  Chart 11 saved: SHAP feature importance bar chart")
 
-# =============================================================
 # SECTION 4 — Plain-language top 5 feature explanations
-# =============================================================
 
 top5 = importance_df.nlargest(5, 'mean_shap')
 print("\n── Top 5 Predictors (SHAP) — Plain-Language Explanations ──")
@@ -157,9 +148,7 @@ for _, row in top5.iterrows():
     print(f"\n  {feat}  (mean |SHAP| = {row['mean_shap']:.4f})")
     print(f"  → {explanations.get(feat, 'See model output.')}")
 
-# =============================================================
 # SECTION 5 — Waterfall chart: highest-stress year
-# =============================================================
 
 # Identify the year with highest predicted stress probability
 stress_probs = xgb.predict_proba(X)[:, 1]
@@ -190,9 +179,7 @@ plt.savefig('resultsfigs/12_shap_waterfall.png', dpi=180, bbox_inches='tight')
 plt.close()
 print("✅  Chart 12 saved: SHAP waterfall chart")
 
-# =============================================================
 # SECTION 6 — SHAP dependence plot: top feature vs stress prob
-# =============================================================
 
 top_feat_idx = np.argmax(mean_shap)
 fig_dep, ax_dep = plt.subplots(figsize=(9, 6))
