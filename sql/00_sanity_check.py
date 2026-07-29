@@ -4,7 +4,7 @@ print("=" * 55)
 print("SANITY CHECK — all three clean files")
 print("=" * 55)
 
-# ── NDIC ──────────────────────────────────────────────────
+# NDIC 
 ndic = pd.read_csv('dataclean/ndic_annual.csv')
 print("\n── NDIC ──────────────────────────────────────────")
 print(f"  Rows: {len(ndic)}  |  Columns: {len(ndic.columns)}")
@@ -20,7 +20,7 @@ print(f"  NPL ratio mismatches (>0.5pp): {len(mismatch)}")
 drops = ndic[ndic['fund_balance_bn'].diff() < 0]
 print(f"  Fund balance year-on-year drops: {len(drops)}")
 
-# ── IADI ──────────────────────────────────────────────────
+# IADI 
 iadi = pd.read_csv('dataclean/iadi_survey.csv')
 print("\n── IADI ──────────────────────────────────────────")
 print(f"  Rows: {len(iadi)}  |  Countries: {iadi['country'].nunique()}")
@@ -31,13 +31,13 @@ iadi['far_check'] = (iadi['fund_balance_usd'] / iadi['insured_deposits_usd']).ro
 far_fail = iadi[abs(iadi['far_check'] - iadi['fund_adequacy_ratio']) > 0.001]
 print(f"  FAR cross-check failures: {len(far_fail)}")
 
-# ── World Bank ─────────────────────────────────────────────
+# World Bank 
 macro = pd.read_csv('dataclean/world_bank_macro.csv')
 print("\n── World Bank Macro ──────────────────────────────")
 print(f"  Rows: {len(macro)}  |  Countries: {macro['country'].nunique()}")
 print(f"  Nulls:\n{macro.isnull().sum()[macro.isnull().sum() > 0]}")
 
-# ── Three-way Nigeria join ─────────────────────────────────
+# Three-way Nigeria join
 master = pd.read_csv('dataclean/ndic_iadi_nigeria_master.csv')
 print("\n── Nigeria master join ───────────────────────────")
 print(f"  Rows: {len(master)}  |  Null cells: {master.isnull().sum().sum()}")
