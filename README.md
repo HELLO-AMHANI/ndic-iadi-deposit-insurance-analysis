@@ -30,4 +30,4 @@ docs/           → report.pdf, slides.pdf, demo link
 dashboard/      → Streamlit app (optional)
 
 ## Status
-🚧 In progress — Stage 4: Modeling & IADI benchmarking
+🚧 In progress — Stage 5: Dashboard, report & slide deck
