@@ -7,8 +7,8 @@
 | world_bank_macro_202501.csv | World Bank Global Financial Development Database | https://databank.worldbank.org | 2026-07-25 | 210 | 2010–2024 |
 
 ## Notes
-- NDIC data covers Nigeria only — 15 annual observations extracted from PDF annual reports
+- NDIC data covers Nigeria only 15 annual observations extracted from PDF annual reports
 - IADI survey covers 14 member countries: Nigeria, USA, Tanzania, Uganda, Canada, India, Indonesia, Malaysia, Philippines, Brazil, Japan, South Korea, Taiwan, Vietnam
 - World Bank macro covers same 14 countries × 15 years
-- 2024 NDIC note: Naira devaluation (₦1,479/USD) + coverage limit revision causes divergence between local FAR (0.09) and IADI-reported FAR (0.4749). Both values retained — the gap is a key finding
-- USA 2010 FDIC fund balance is negative (post-2008 crisis deficit) — confirmed accurate, flagged in analysis
+- 2024 NDIC note: Naira devaluation (₦1,479/USD) + coverage limit revision causes divergence between local FAR (0.09) and IADI-reported FAR (0.4749). Both values retained the gap is a key finding
+- USA 2010 FDIC fund balance is negative (post-2008 crisis deficit) confirmed accurate, flagged in analysis
