@@ -1,4 +1,3 @@
-# =============================================================
 # NOTEBOOK 05 — PREDICTIVE MODELING
 # NDIC + IADI Deposit Insurance Analysis
 # Author: Promise O. Amhanesi
@@ -31,12 +30,10 @@ df = pd.read_csv('dataclean/model_dataset.csv')
 print(f"Dataset: {df.shape[0]} rows × {df.shape[1]} columns")
 print(f"Years  : {df['year'].min()} – {df['year'].max()}")
 
-# =============================================================
 # SECTION 1 — Define stress flag
 # fund_stress_flag already in model_dataset from notebook 02
 # (claims_intensity > 0.01).
 # For modeling we also add: recession flag (gdp_growth < 0)
-# =============================================================
 
 df['fund_stress_flag'] = (
     (df['claims_intensity'] > 0.01) |
@@ -48,9 +45,7 @@ print(df[['year','claims_intensity','gdp_growth','fund_stress_flag']].to_string(
 print(f"\nStress years (flag=1): {df[df['fund_stress_flag']==1]['year'].tolist()}")
 print(f"Calm   years (flag=0): {df[df['fund_stress_flag']==0]['year'].tolist()}")
 
-# =============================================================
 # SECTION 2 — Feature selection
-# =============================================================
 
 FEATURES = [
     'local_fund_adequacy_ratio',
@@ -73,9 +68,7 @@ print(f"\nModeling rows after dropping NaN: {len(df_model)}")
 X = df_model[FEATURES].values
 y = df_model['fund_stress_flag'].values
 
-# =============================================================
 # SECTION 3 — Train / test split (out-of-time)
-# =============================================================
 
 train_mask = df_model['year'] <= 2019
 test_mask  = df_model['year'] >  2019
@@ -93,9 +86,7 @@ scaler  = StandardScaler()
 X_train_s = scaler.fit_transform(X_train)
 X_test_s  = scaler.transform(X_test)
 
-# =============================================================
 # SECTION 4 — Baseline: Logistic Regression
-# =============================================================
 
 lr = LogisticRegression(max_iter=1000, C=0.1, random_state=42)
 lr.fit(X_train_s, y_train)
@@ -118,9 +109,7 @@ print(f"  Precision: {lr_prec:.4f}")
 print(f"  Recall   : {lr_rec:.4f}")
 print(f"  F1 Score : {lr_f1:.4f}")
 
-# =============================================================
 # SECTION 5 — Advanced: XGBoost
-# =============================================================
 
 xgb = XGBClassifier(
     n_estimators=50,
@@ -150,10 +139,8 @@ print(f"  Precision: {xgb_prec:.4f}")
 print(f"  Recall   : {xgb_rec:.4f}")
 print(f"  F1 Score : {xgb_f1:.4f}")
 
-# =============================================================
 # SECTION 6 — Cross-validation on full dataset (leave-one-out)
 # With 14 rows, use LOO CV to maximise each fold
-# =============================================================
 
 from sklearn.model_selection import LeaveOneOut
 
@@ -172,9 +159,7 @@ print(f"\n── Leave-One-Out CV (F1 macro) ───────────�
 print(f"  Logistic Regression : mean={lr_cv_scores.mean():.4f}  std={lr_cv_scores.std():.4f}")
 print(f"  XGBoost             : mean={xgb_cv_scores.mean():.4f}  std={xgb_cv_scores.std():.4f}")
 
-# =============================================================
 # SECTION 7 — Save model metrics CSV
-# =============================================================
 
 metrics_df = pd.DataFrame([
     {
@@ -211,9 +196,7 @@ metrics_df.to_csv('results/model_metrics.csv', index=False)
 print("\n✅  model_metrics.csv saved to results/")
 print(metrics_df.to_string(index=False))
 
-# =============================================================
 # SECTION 8 — ROC curve (best model = XGBoost)
-# =============================================================
 
 fig_roc, ax_roc = plt.subplots(figsize=(8, 6))
 
@@ -240,9 +223,7 @@ plt.savefig('resultsfigs/08_roc_curve.png', dpi=180, bbox_inches='tight')
 plt.close()
 print("✅  Chart 8 saved: ROC curve")
 
-# =============================================================
 # SECTION 9 — Confusion matrix (XGBoost)
-# =============================================================
 
 fig_cm, ax_cm = plt.subplots(figsize=(6, 5))
 cm = confusion_matrix(y_test, xgb_pred)
