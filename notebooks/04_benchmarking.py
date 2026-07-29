@@ -1,8 +1,7 @@
-# =============================================================
 # NOTEBOOK 04 — IADI BENCHMARKING ANALYSIS
 # NDIC + IADI Deposit Insurance Analysis
 # Author: Promise O. Amhanesi
-# =============================================================
+# ========================================
 
 import pandas as pd
 import numpy as np
@@ -20,10 +19,8 @@ df   = pd.read_csv('dataclean/model_dataset.csv')
 iadi = pd.read_csv('dataclean/iadi_survey.csv')
 macro = pd.read_csv('dataclean/world_bank_macro.csv')
 
-# =============================================================
 # SECTION 1 — Score NDIC against IADI Core Principles (1–5)
 # Based on 2024 data and qualitative public evidence
-# =============================================================
 
 # IADI has 7 Core Principles for Effective Deposit Insurance
 # We score NDIC 1 (poor) to 5 (best practice) on each
@@ -84,9 +81,7 @@ print(scores_df[['principle','ndic_score','iadi_avg']].to_string(index=False))
 print(f"\nNDIC overall average : {scores_df['ndic_score'].mean():.2f} / 5")
 print(f"IADI peer average    : {scores_df['iadi_avg'].mean():.2f} / 5")
 
-# =============================================================
 # SECTION 2 — Gap table: NDIC vs IADI average vs best practice
-# =============================================================
 
 iadi_nga = iadi[iadi['country'].str.lower() == 'nigeria'].copy()
 
@@ -148,10 +143,8 @@ gap_df.to_csv('results/gap_table.csv', index=False)
 print("\n── Gap table saved to results/gap_table.csv ──")
 print(gap_df[gap_df['year'] == gap_df['year'].max()].to_string(index=False))
 
-# =============================================================
 # SECTION 3 — Radar chart: NDIC vs IADI average
 #             across 6 Core Principle dimensions
-# =============================================================
 
 categories  = [p.replace('\n',' ') for p in list(principles.keys())[:6]]
 ndic_scores = [principles[k]['score']   for k in list(principles.keys())[:6]]
@@ -189,10 +182,8 @@ plt.savefig('resultsfigs/06_radar_iadi_benchmarking.png', dpi=180, bbox_inches='
 plt.close()
 print("✅  Chart 6 saved: radar chart — IADI benchmarking")
 
-# =============================================================
 # SECTION 4 — Peer comparison table:
 #             Nigeria vs African + emerging-market peers
-# =============================================================
 
 peers = ['Nigeria', 'Tanzania', 'Uganda', 'India', 'Indonesia', 'Philippines']
 
