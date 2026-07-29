@@ -1,8 +1,7 @@
-# =============================================================
 # NOTEBOOK 03 — EXPLORATORY DATA ANALYSIS
 # NDIC + IADI Deposit Insurance Analysis
 # Author: Promise O. Amhanesi
-# =============================================================
+# =======================================
 
 import pandas as pd
 import numpy as np
@@ -17,7 +16,7 @@ import os
 
 os.makedirs('resultsfigs', exist_ok=True)
 
-# ── Load datasets ─────────────────────────────────────────────────────────────
+# Load datasets 
 df     = pd.read_csv('dataclean/model_dataset.csv')
 iadi   = pd.read_csv('dataclean/iadi_survey.csv')
 macro  = pd.read_csv('dataclean/world_bank_macro.csv')
@@ -27,10 +26,8 @@ print(f"iadi_survey   : {iadi.shape}")
 print(f"macro         : {macro.shape}")
 print(f"Years in df   : {df['year'].min()} – {df['year'].max()}")
 
-# =============================================================
 # CHART 1 — Time-series: Fund Balance vs Claims Paid
 #           with banking stress year annotations
-# =============================================================
 
 fig1 = go.Figure()
 
@@ -84,10 +81,8 @@ fig1.write_image('resultsfigs/01_fund_vs_claims_timeseries.png',
                  width=1100, height=550, scale=2)
 print("✅  Chart 1 saved: fund vs claims time-series")
 
-# =============================================================
 # CHART 2 — Benchmark bar chart:
 #           NDIC FAR vs IADI peer average and African peers
-# =============================================================
 
 # African peers in dataset: Nigeria, Tanzania, Uganda
 african = iadi[iadi['country'].isin(['Nigeria','Tanzania','Uganda'])].copy()
@@ -139,10 +134,8 @@ plt.savefig('resultsfigs/02_benchmark_bar_far.png', dpi=180, bbox_inches='tight'
 plt.close()
 print("✅  Chart 2 saved: benchmark bar chart — FAR")
 
-# =============================================================
 # CHART 3 — Correlation heatmap:
 #           NDIC ratios vs macro variables
-# =============================================================
 
 heatmap_cols = {
     'local_fund_adequacy_ratio' : 'Fund Adequacy\nRatio (local)',
@@ -178,10 +171,8 @@ plt.savefig('resultsfigs/03_correlation_heatmap.png', dpi=180, bbox_inches='tigh
 plt.close()
 print("✅  Chart 3 saved: correlation heatmap")
 
-# =============================================================
 # CHART 4 — Scatter: coverage ratio vs fund adequacy
 #           All IADI member countries, Nigeria highlighted
-# =============================================================
 
 # Compute averages per country across all years
 scatter_base = iadi.merge(
@@ -259,10 +250,8 @@ plt.savefig('resultsfigs/04_scatter_coverage_vs_far.png', dpi=180, bbox_inches='
 plt.close()
 print("✅  Chart 4 saved: scatter — coverage ratio vs FAR")
 
-# =============================================================
 # CHART 5 — FAR trend: NDIC local vs IADI-reported vs peer avg
 #           (Nigeria in focus over time)
-# =============================================================
 
 fig5 = go.Figure()
 
@@ -313,9 +302,7 @@ fig5.write_image('resultsfigs/05_far_trend_comparison.png',
                  width=1100, height=550, scale=2)
 print("✅  Chart 5 saved: FAR trend — NDIC vs IADI average")
 
-# =============================================================
 # PRINT SUMMARY TABLE for Excel key findings paragraph
-# =============================================================
 
 print("\n── EDA Summary Table ──────────────────────────────────")
 summary = df[['year',
