@@ -5,12 +5,12 @@ import os
 engine = create_engine('sqlite:///ndic_iadi.db')
 os.makedirs('dataclean', exist_ok=True)
 
-# ── 1. NDIC clean export ──────────────────────────────────────────────────────
+# 1. NDIC clean export 
 ndic = pd.read_sql("SELECT * FROM ndic_raw ORDER BY year", engine)
 ndic.to_csv('dataclean/ndic_annual.csv', index=False)
 print(f"✅  ndic_annual.csv exported:       {len(ndic)} rows")
 
-# ── 2. Nigeria-only IADI rows ─────────────────────────────────────────────────
+# 2. Nigeria-only IADI rows 
 iadi_nga = pd.read_sql("""
     SELECT * FROM iadi_survey
     WHERE LOWER(country) = 'nigeria'
@@ -19,12 +19,12 @@ iadi_nga = pd.read_sql("""
 iadi_nga.to_csv('dataclean/iadi_nigeria.csv', index=False)
 print(f"✅  iadi_nigeria.csv exported:      {len(iadi_nga)} rows")
 
-# ── 3. Full IADI survey clean ─────────────────────────────────────────────────
+# 3. Full IADI survey clean 
 iadi_all = pd.read_sql("SELECT * FROM iadi_survey ORDER BY country, year", engine)
 iadi_all.to_csv('dataclean/iadi_survey.csv', index=False)
 print(f"✅  iadi_survey.csv exported:       {len(iadi_all)} rows")
 
-# ── 4. Nigeria macro rows ─────────────────────────────────────────────────────
+# 4. Nigeria macro rows 
 macro_nga = pd.read_sql("""
     SELECT * FROM world_bank_macro
     WHERE LOWER(country) = 'nigeria'
@@ -33,12 +33,12 @@ macro_nga = pd.read_sql("""
 macro_nga.to_csv('dataclean/macro_nigeria.csv', index=False)
 print(f"✅  macro_nigeria.csv exported:     {len(macro_nga)} rows")
 
-# ── 5. Full macro clean ───────────────────────────────────────────────────────
+# 5. Full macro clean 
 macro_all = pd.read_sql("SELECT * FROM world_bank_macro ORDER BY country, year", engine)
 macro_all.to_csv('dataclean/world_bank_macro.csv', index=False)
 print(f"✅  world_bank_macro.csv exported:  {len(macro_all)} rows")
 
-# ── 6. NDIC joined with Nigeria macro (the master Nigeria table) ──────────────
+# 6. NDIC joined with Nigeria macro (the master Nigeria table) 
 ndic_macro = pd.read_sql("""
     SELECT
         n.*,
@@ -55,7 +55,7 @@ ndic_macro = pd.read_sql("""
 ndic_macro.to_csv('dataclean/ndic_with_macro.csv', index=False)
 print(f"✅  ndic_with_macro.csv exported:   {len(ndic_macro)} rows")
 
-# ── 7. NDIC + IADI Nigeria side-by-side (benchmarking table) ─────────────────
+# 7. NDIC + IADI Nigeria side-by-side (benchmarking table) 
 ndic_iadi_nga = pd.read_sql("""
     SELECT
         n.year,
