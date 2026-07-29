@@ -1,8 +1,7 @@
-# =============================================================
 # NOTEBOOK 01 — DATA LOAD, CLEAN & MERGE
 # NDIC + IADI Deposit Insurance Analysis
 # Author: Promise O. Amhanesi
-# =============================================================
+# ======================================
 
 import pandas as pd
 import numpy as np
@@ -11,7 +10,7 @@ import os
 pd.set_option('display.max_columns', None)
 pd.set_option('display.float_format', '{:.4f}'.format)
 
-# ── SECTION 1: Load all clean files ───────────────────────────────────────────
+# SECTION 1: Load all clean files
 
 ndic  = pd.read_csv('dataclean/ndic_annual.csv')
 iadi  = pd.read_csv('dataclean/iadi_survey.csv')
@@ -22,7 +21,7 @@ print(f"  NDIC  : {ndic.shape}")
 print(f"  IADI  : {iadi.shape}")
 print(f"  Macro : {macro.shape}")
 
-# ── SECTION 2: Inspect each file ──────────────────────────────────────────────
+# SECTION 2: Inspect each file 
 
 print("\n── NDIC dtypes and nulls ──")
 print(ndic.dtypes)
@@ -36,7 +35,7 @@ print("\n── Macro dtypes and nulls ──")
 print(macro.dtypes)
 print(macro.isnull().sum())
 
-# ── SECTION 3: Standardize country names with fuzzy matching ──────────────────
+# SECTION 3: Standardize country names with fuzzy matching
 
 from thefuzz import process
 
@@ -55,7 +54,7 @@ print("\n── Countries after standardization ──")
 print("IADI :", sorted(iadi['country'].unique()))
 print("Macro:", sorted(macro['country'].unique()))
 
-# ── SECTION 4: Missing value handling rules ───────────────────────────────────
+# SECTION 4: Missing value handling rules
 
 # NDIC — one 'note' column has non-numeric text — keep as-is, exclude from modeling
 # IADI — 'note' column has one value (2024 Nigeria flag) — keep as-is
@@ -71,7 +70,7 @@ print("NDIC :", ndic_clean.isnull().sum().sum())
 print("IADI :", iadi_clean.isnull().sum().sum())
 print("Macro:", macro_clean.isnull().sum().sum())
 
-# ── SECTION 5: Add region mapping to IADI (needed for pivot later) ────────────
+# SECTION 5: Add region mapping to IADI (needed for pivot later)
 
 region_map = {
     'Nigeria': 'Africa', 'Tanzania': 'Africa', 'Uganda': 'Africa',
@@ -84,7 +83,7 @@ iadi_clean['region'] = iadi_clean['country'].map(region_map)
 print("\n── Region mapping check ──")
 print(iadi_clean[['country','region']].drop_duplicates().to_string(index=False))
 
-# ── SECTION 6: Compute IADI peer averages by year (all 14 countries) ──────────
+# SECTION 6: Compute IADI peer averages by year (all 14 countries)
 
 iadi_avg = iadi_clean.groupby('year').agg(
     iadi_avg_fund_adequacy = ('fund_adequacy_ratio', 'mean'),
@@ -95,20 +94,20 @@ iadi_avg = iadi_clean.groupby('year').agg(
 print("\n── IADI peer averages by year ──")
 print(iadi_avg.to_string(index=False))
 
-# ── SECTION 7: Nigeria macro rows only ────────────────────────────────────────
+# SECTION 7: Nigeria macro rows only 
 
 macro_nga = macro_clean[macro_clean['country'].str.lower() == 'nigeria'].copy()
 macro_nga = macro_nga.sort_values('year').reset_index(drop=True)
 print(f"\n── Nigeria macro rows: {len(macro_nga)} ──")
 print(macro_nga.to_string(index=False))
 
-# ── SECTION 8: Nigeria IADI rows only ─────────────────────────────────────────
+# SECTION 8: Nigeria IADI rows only
 
 iadi_nga = iadi_clean[iadi_clean['country'].str.lower() == 'nigeria'].copy()
 iadi_nga = iadi_nga.sort_values('year').reset_index(drop=True)
 print(f"\n── Nigeria IADI rows: {len(iadi_nga)} ──")
 
-# ── SECTION 9: Build the master Nigeria analytical frame ──────────────────────
+# SECTION 9: Build the master Nigeria analytical frame
 
 df = ndic_clean.copy()
 df = df.sort_values('year').reset_index(drop=True)
@@ -133,7 +132,7 @@ print(f"\n── Master frame shape: {df.shape} ──")
 print(df.dtypes)
 print(f"Nulls: {df.isnull().sum().sum()}")
 
-# ── SECTION 10: Save intermediate clean frame ──────────────────────────────────
+# SECTION 10: Save intermediate clean frame
 
 os.makedirs('dataclean', exist_ok=True)
 df.to_csv('dataclean/nigeria_analytical_frame.csv', index=False)
